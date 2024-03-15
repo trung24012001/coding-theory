@@ -1,8 +1,8 @@
 def exponent(b, n, m):
-    power = b % m
-    for _ in range(n - 1):
+    power = 1
+    for _ in range(n):
         power = power * b % m
     return power
 
 
-print(exponent(989, 931, 3599))
+print(exponent(2, 3, 5))
