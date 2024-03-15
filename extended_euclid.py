@@ -18,5 +18,5 @@ def extended_euclid(a, b):
     return (d, x, y)
 
 
-a, b = 7, 13
+a, b = 99, 101
 print(extended_euclid(a, b))
