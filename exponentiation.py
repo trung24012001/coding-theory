@@ -1,8 +1,15 @@
-def exponent(b, n, m):
+def exponentiation(b, n, m):
+    res = 1
     power = b % m
-    for _ in range(n - 1):
-        power = power * b % m
-    return power
+    while n > 0:
+        # n is odd
+        if (n & 1) != 0:
+            res = res * power % m
+        n = n >> 1  # n = n / 2
+        power = (power * power) % m
+        return res
+
+    return res
 
 
-print(exponent(989, 931, 3599))
+print(exponentiation(23121312123123, 21312323123, 23123123123))
