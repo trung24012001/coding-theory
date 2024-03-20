@@ -2,10 +2,10 @@ import rsa_algorithm as rsa
 import datetime
 
 # print("Start  :", datetime.datetime.now())
-pubkey, privkey = rsa.newkeys(16)
+pubkey, privkey = rsa.newkeys(128)
 # print("Genkey :", datetime.datetime.now())
 
-plaintext = "12".encode("utf8")
+plaintext = "Hello World".encode("utf8")
 print("Plaintext: ", plaintext)
 
 ciphertext = rsa.encrypt(plaintext, pubkey)

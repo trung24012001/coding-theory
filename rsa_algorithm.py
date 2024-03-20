@@ -1,4 +1,5 @@
 import os, math, struct
+import random
 
 
 def gcd(a, b):
@@ -35,7 +36,7 @@ def inverse(x, n):
     return inv
 
 
-def exponentiation(b, n, m):
+def exp(b, n, m):
     res = 1
     power = b % m
     while n > 0:
@@ -72,6 +73,21 @@ def read_rand_odd_int(nbits):
     return value | 1
 
 
+def brute_force_primality_tesing(num):
+    for i in range(2, int(math.sqrt(num))):
+        if num % i == 0:
+            return False
+    return True
+
+
+def fermat_primality_testing(num, k):
+    for _ in range(k):
+        a = random.randrange(2, num, 1)
+        if pow(a, num - 1, num) != 1:
+            return False
+    return True
+
+
 def is_prime(num):
     if num < 10:
         return num in {2, 3, 5, 7}
@@ -79,13 +95,7 @@ def is_prime(num):
     if not (num & 1):
         return False
 
-    for i in range(2, int(math.sqrt(num))):
-        if num % i == 0:
-            return False
-    return True
-
-    # # TODO
-    # return True
+    return fermat_primality_testing(num, 5)
 
 
 def get_prime(nbits):
@@ -153,19 +163,27 @@ def newkeys(nbits, exponent=127):
     return (PublicKey(n, e), PrivateKey(n, e, d, p, q))
 
 
+def encrypt_int(message: int, e: int, n: int) -> int:
+    return exp(message, e, n)
+
+
+def decrypt_int(message: int, d: int, n: int) -> int:
+    return exp(message, d, n)
+
+
 def encrypt(message: bytes, pub_key: PublicKey) -> bytes:
     msglength = len(message) * 8
     if msglength > pub_key.n.bit_length():
         raise Exception("Message too large")
 
     payload = bytes2int(message)
-    encrypted = exponentiation(payload, pub_key.e, pub_key.n)
+    encrypted = encrypt_int(payload, pub_key.e, pub_key.n)
 
     return int2bytes(encrypted)
 
 
 def decrypt(crypto: bytes, priv_key: PrivateKey) -> bytes:
     payload = bytes2int(crypto)
-    decrypted = exponentiation(payload, priv_key.d, priv_key.n)
+    decrypted = decrypt_int(payload, priv_key.d, priv_key.n)
 
     return int2bytes(decrypted)
