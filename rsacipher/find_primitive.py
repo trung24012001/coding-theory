@@ -50,5 +50,5 @@ def find_primitive(n: int) -> int:
     return -1
 
 
-x = find_primitive(761)
+x = find_primitive(97)
 print(x)
