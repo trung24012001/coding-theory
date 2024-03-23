@@ -3,6 +3,12 @@ import struct
 import math
 
 
+def gcd(a: int, b: int):
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+
 def bytes2int(raw_bytes: bytes) -> int:
     return int.from_bytes(raw_bytes, "big", signed=False)
 
@@ -15,12 +21,13 @@ def int2bytes(num: int) -> bytes:
 def read_rand_odd_int(nbits: int) -> int:
     nbytes, rbits = divmod(nbits, 8)
     data = os.urandom(nbytes)
-
+    print(data)
     if rbits > 0:
         randval = ord(os.urandom(1))
         randval >>= 8 - rbits
-        data += struct.pack("B", randval)
-
+        print("rb", data)
+        data = struct.pack("B", randval) + data
+    print(data)
     value = bytes2int(data)
     value |= 1 << (nbits - 1)
 

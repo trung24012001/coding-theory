@@ -3,12 +3,18 @@ import prime
 import utils
 
 
-def is_prime(n: int) -> bool:
-    if n < 2:
+def isPrime(n):
+    if n < 10:
+        return n in {2, 3, 5, 7}
+
+    if not (n & 1):
         return False
 
-    for i in range(2, int(math.sqrt(n)) + 1):
-        if n % i == 0:
+    for i in range(3, (n // 2) + 1):
+        c = math.comb(n, i)
+        if c == 0 or c == 1:
+            continue
+        if c % n != 0:
             return False
 
     return True
@@ -36,6 +42,7 @@ def find_primitive(n: int) -> int:
     phi = n - 1
 
     find_prime_factors(s, phi)
+    print(s)
 
     for r in range(2, phi + 1):
         is_primitive = True
@@ -50,5 +57,21 @@ def find_primitive(n: int) -> int:
     return -1
 
 
-x = find_primitive(prime.get_prime(64))
-print(x)
+def find_all_primitive(p, n):
+    phi = n - 1
+    prim = set()
+    for i in range(2, n):
+        if utils.gcd(i, phi) == 1:
+            beta = utils.exp(p, i, n)
+            prim.add(beta)
+
+    return prim
+
+
+p = prime.get_prime(9)
+print(p)
+print(isPrime(p))
+# x = find_primitive(p)
+# print(x)
+
+# print(find_all_primitive(x, 919))

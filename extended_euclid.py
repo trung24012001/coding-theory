@@ -31,5 +31,5 @@ def extended_euclid(a, b):
     return (d, x, y)
 
 
-a, b = 127, 33712
+a, b = 36, 919
 print(extended_euclid(a, b))
