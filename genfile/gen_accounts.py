@@ -1,8 +1,6 @@
 import random
 import string
 
-random.seed(9)
-
 
 def generate_password(length):
     characters = string.ascii_letters + string.digits
@@ -11,6 +9,8 @@ def generate_password(length):
     return "".join(password)
 
 
+day = 1
+
 accounts = "username,password\n"
 for i in range(1, 39):
     i = "0" + str(i) if i < 10 else str(i)
@@ -18,6 +18,6 @@ for i in range(1, 39):
     password = generate_password(12)
     accounts += username + "," + password + "\n"
 
-with open("output/accounts.csv", "w") as f:
+with open(f"output/accounts{day}.csv", "w") as f:
     f.write(accounts)
-    print("Generated output/accounts.csv")
+    print(f"Generated output/accounts{day}.csv")

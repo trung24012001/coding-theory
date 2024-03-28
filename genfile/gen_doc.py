@@ -2,13 +2,15 @@ from docx import Document
 import csv
 
 
+day = 1
+
 students = []
 with open("data/students.csv", "r", encoding="utf8") as f:
     for row in csv.DictReader(f):
         students.append(row)
 
 accounts = []
-with open("output/accounts.csv", "r", encoding="utf8") as f:
+with open(f"output/accounts{day}.csv", "r", encoding="utf8") as f:
     for row in csv.DictReader(f):
         accounts.append(row)
 
@@ -63,4 +65,4 @@ for i, student in enumerate(students):
 
 # document.add_page_break()
 
-document.save("output/demo.docx")
+document.save(f"output/accounts_day{day}.docx")
