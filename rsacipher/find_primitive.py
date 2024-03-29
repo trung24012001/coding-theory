@@ -95,20 +95,25 @@ def find_all_primitive(p, n):
     return prim
 
 
-# p = prime.get_prime(15)
-# print(p)
-# print(isPrime(p))
+if __name__ == "__main__":
+    from aks_algo import aks
 
-# x = find_primitive(p)
-# print(x)
-# print(find_all_primitive(x, 919))
+    p = prime.get_prime(100)
+    print(len(str(p)))
+    print(aks(p))
 
-for p in range(9999, 100000, 2):
-    ismatch = False
-    for i in range(1, 200):
-        if choose(p, i) % p != 0 and not prime.is_prime(p):
-            print(p, i)
-            ismatch = True
-            break
-    if not ismatch and not prime.is_prime(p):
-        print(p, "NOT MATCH")
+    ### 257111102671082974422453334007684805697 not prime
+
+    # x = find_primitive(p)
+    # print(x)
+    # print(find_all_primitive(x, 919))
+
+    # for p in range(9999, 100000, 2):
+    #     ismatch = False
+    #     for i in range(1, 200):
+    #         if choose(p, i) % p != 0 and not prime.is_prime(p):
+    #             print(p, i)
+    #             ismatch = True
+    #             break
+    #     if not ismatch and not prime.is_prime(p):
+    #         print(p, "NOT MATCH")
