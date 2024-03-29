@@ -21,13 +21,10 @@ def int2bytes(num: int) -> bytes:
 def read_rand_odd_int(nbits: int) -> int:
     nbytes, rbits = divmod(nbits, 8)
     data = os.urandom(nbytes)
-    print(data)
     if rbits > 0:
         randval = ord(os.urandom(1))
         randval >>= 8 - rbits
-        print("rb", data)
         data = struct.pack("B", randval) + data
-    print(data)
     value = bytes2int(data)
     value |= 1 << (nbits - 1)
 
