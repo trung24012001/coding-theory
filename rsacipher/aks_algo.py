@@ -112,7 +112,6 @@
 #             return "Composite"
 #     return "Prime"
 
-#!/usr/bin/python3
 
 import math
 import multiprocessing
@@ -165,16 +164,16 @@ def step4(n, r):
 
 
 def step5(n, r):
-    max = math.sqrt(phi(r))
-    rn = math.floor(max * math.log2(n))
+    # 1 to sqrt(phi) * log2(n)
+    rn = math.floor(math.sqrt(phi(r)) * math.log2(n))
     if rn > n:
         rn = n
-    threads = []
-    ran = rn / 8
-    ran = math.floor(ran)
+
+    ran = rn // 8
     if ran == 0:
         ran = 1
 
+    threads = []
     manager = multiprocessing.Manager()
     return_dict = manager.dict()
 
@@ -207,25 +206,27 @@ def step5_check(n, bot, top, return_dict):
 
 
 def aks(n):
-    # if step1(n):
-    if True:
-        r = step2(n)
-        return step3(n, r) and (step4(n, r) or step5(n, r))
-    return False
+    # if not step1(n):
+    #     return False
+    r = step2(n)
+    return step3(n, r) and (step4(n, r) or step5(n, r))
 
 
-def trivial(n):
-    if n == 2:
-        return True
-    for i in range(2, math.floor(math.sqrt(n)) + 1):
-        if n % i == 0:
-            return False
-    return True
+# return False
 
 
-def main():
-    for i in range(int(argv[1]), int(argv[2])):
-        assert aks(i) == trivial(i)
+# def trivial(n):
+#     if n == 2:
+#         return True
+#     for i in range(2, math.floor(math.sqrt(n)) + 1):
+#         if n % i == 0:
+#             return False
+#     return True
+
+
+# def main():
+#     for i in range(int(argv[1]), int(argv[2])):
+#         assert aks(i) == trivial(i)
 
 
 # if __name__ == "__main__":

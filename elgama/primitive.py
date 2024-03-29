@@ -1,6 +1,5 @@
 import math
 import prime
-import utils
 
 
 def choose(n, k):
@@ -33,7 +32,7 @@ def coefcheck(n, k):
     return True
 
 
-def isPrime(n):
+def isprime(n):
     if n < 10:
         return n in {2, 3, 5, 7}
 
@@ -69,12 +68,11 @@ def find_primitive(n: int) -> int:
     phi = n - 1
 
     find_prime_factors(s, phi)
-    print(s)
 
     for r in range(2, phi + 1):
         is_primitive = True
         for i in s:
-            if utils.exp(r, phi // i, n) == 1:
+            if pow(r, phi // i, n) == 1:
                 is_primitive = False
                 break
 
@@ -88,32 +86,8 @@ def find_all_primitive(p, n):
     phi = n - 1
     prim = set()
     for i in range(2, n):
-        if utils.gcd(i, phi) == 1:
-            beta = utils.exp(p, i, n)
+        if math.gcd(i, phi) == 1:
+            beta = pow(p, i, n)
             prim.add(beta)
 
     return prim
-
-
-if __name__ == "__main__":
-    from aks_algo import aks
-
-    p = prime.get_prime(100)
-    print(len(str(p)))
-    print(aks(p))
-
-    ### 257111102671082974422453334007684805697 not prime
-
-    # x = find_primitive(p)
-    # print(x)
-    # print(find_all_primitive(x, 919))
-
-    # for p in range(9999, 100000, 2):
-    #     ismatch = False
-    #     for i in range(1, 200):
-    #         if choose(p, i) % p != 0 and not prime.is_prime(p):
-    #             print(p, i)
-    #             ismatch = True
-    #             break
-    #     if not ismatch and not prime.is_prime(p):
-    #         print(p, "NOT MATCH")
