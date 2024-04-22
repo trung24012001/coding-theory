@@ -45,6 +45,7 @@ def encrypt_int(x, p, alpha, beta):
     k = random.randint(2, p)
     y1 = pow(alpha, k, p)
     y2 = x * pow(beta, k, p) % p
+
     return (y1, y2)
 
 
@@ -64,7 +65,7 @@ def decrypt(y1, y2, a, p):
 
 
 def main():
-    p = prime.get_prime(50)
+    p = prime.get_prime(64)
     print(len(str(p)))
     a = random.randint(p // 2, p)
     alpha = find_primitive(p)
