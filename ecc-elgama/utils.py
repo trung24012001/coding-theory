@@ -3,12 +3,6 @@ import struct
 import math
 
 
-def gcd(a: int, b: int):
-    while b != 0:
-        a, b = b, a % b
-    return a
-
-
 def bytes2int(raw_bytes: bytes) -> int:
     return int.from_bytes(raw_bytes, "big", signed=False)
 
@@ -42,3 +36,42 @@ def exp(b: int, n: int, m: int) -> int:
         power = (power * power) % m
 
     return res
+
+
+# Euclidean
+def gcd(a: int, b: int):
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+
+# Extended Euclidean
+def gcd_extended(a: int, b: int):
+    if b == 0:
+        return (a, 1, 0)
+
+    x2, x1 = 1, 0
+    y2, y1 = 0, 1
+    while b > 0:
+        q = a // b
+        a, b = b, a % b
+        x2, x1 = x1, x2 - q * x1
+        y2, y1 = y1, y2 - q * y1
+
+    return (a, x2, y2)
+
+
+# Extended Euclidean for modular inverse
+def modinv(a: int, n: int):
+    if n == 0:
+        return a
+
+    x1, x2, y1, y2 = 0, 1, 1, 0
+    b = n
+    while b > 0:
+        q = a // b
+        a, b = b, a % b
+        x2, x1 = x1, x2 - q * x1
+        y2, y1 = y1, y2 - q * y1
+
+    return x2 % n

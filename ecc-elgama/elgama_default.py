@@ -66,7 +66,7 @@ def decrypt(y1, y2, a, p):
 
 def main():
     p = prime.get_prime(64)
-    print(len(str(p)))
+    print(len(str(p)), "bits")
     a = random.randint(p // 2, p)
     alpha = find_primitive(p)
     if alpha == -1:
