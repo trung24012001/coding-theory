@@ -1,30 +1,20 @@
 import random
 
-nbits = 6
+nbits = 256
 
 # Pcurve = prime.get_prime(nbits)  # The proven prime
-Pcurve = 127
+Pcurve = 65475022289176534139529635926357986987271043120469028107213086110482165603061  # 256 bit (prime)
 
 # Elliptic curve: y^2 = x^3 + Acurve * x + Bcurve
 Acurve = 3
-Bcurve = 5
+Bcurve = 7
 
 # Generator Point
-Gx = 1
-Gy = 3
+Gx = 929763249549154445826990677886896545583707906786145278303819325969366700203
+Gy = 1241860825326723991180044566589092481427283685753156458094632687917995793307
 GPoint = (Gx, Gy)
 
 k = random.getrandbits(nbits)
-
-
-# def modinv(a, n=Pcurve):  # Extended Euclidean Algorithm/'division' in elliptic curves
-#     lm, hm = 1, 0
-#     low, high = a % n, n
-#     while low > 1:
-#         ratio = high / low
-#         nm, new = hm - lm * ratio, high - low * ratio
-#         lm, low, hm, high = nm, new, lm, low
-#     return lm % n
 
 
 def modinv(a, n=Pcurve):
@@ -92,7 +82,7 @@ def decryption(C1, C2, private_Key):
 def encode(msg):
     string_ascii = ""
     for i in msg:
-        string_ascii += str(ord(i))
+        string_ascii += str(ord(i) + 100)
 
     return string_ascii
 
@@ -102,9 +92,8 @@ def decode(newascii_string):
     i = 0
     dec_message = ""
     while i < len(str(newascii_string)):
-
         pack = newascii_string[i : i + 3]
-        dec_message += chr(pack)
+        dec_message += chr(int(pack) - 100)
         i = i + 3
 
     return dec_message
@@ -112,13 +101,18 @@ def decode(newascii_string):
 
 if __name__ == "__main__":
 
-    message = "12"
+    message = "Hello World"
 
-    (C1, C2) = encryption(gen_pubKey(), message)
+    pubkey = gen_pubKey()
 
-    decrypted_string = decryption(C1, C2, privKey)
+    (C1, C2) = encryption(pubkey, encode(message))
 
+    decrypted_string = str(decryption(C1, C2, privKey))
+
+    print("k:", k)
+    print("privkey:", privKey)
+    print("pubkey:", pubkey)
     print("Cipher Text : ", C1, C2)
     print("-----")
     print(" **Original Message** ")
-    print(decrypted_string)
+    print(decode(decrypted_string))
