@@ -18,7 +18,6 @@
 
 
 import random
-import prime
 from primitive import find_primitive
 
 
