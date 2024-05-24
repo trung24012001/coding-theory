@@ -75,3 +75,22 @@ def modinv(a: int, n: int):
         y2, y1 = y1, y2 - q * y1
 
     return x2 % n
+
+
+# encode ascii
+def encode_ascii(x):
+    n = len(x)
+    s = 0
+    while n > 0:
+        s += (ord(x[::-1][n - 1]) - 65) * 26 ** (n - 1)
+        n -= 1
+    return s
+
+
+# decode ascii
+def decode_ascii(s):
+    x = ""
+    while s > 0:
+        s, r = divmod(s, 26)
+        x += chr(r + 65)
+    return x[::-1]

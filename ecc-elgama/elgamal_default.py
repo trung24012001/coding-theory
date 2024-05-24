@@ -24,21 +24,40 @@ import prime
 from primitive import find_primitive
 
 
-def text2int(x):
-    n = len(x)
-    s = 0
-    while n > 0:
-        s += (ord(x[n - 1]) - 64) * 26 ** (n - 1)
-        n -= 1
-    return s
+def text2int(msg):
+    string_ascii = ""
+    for i in msg:
+        string_ascii += str(ord(i) + 100)
+    return int(string_ascii)
 
 
-def int2text(s):
-    x = ""
-    while s > 0:
-        s, r = divmod(s, 26)
-        x += chr(r + 64)
-    return x
+def int2text(ascii_int):
+    newascii_string = str(ascii_int)
+    pack = ""
+    i = 0
+    dec_message = ""
+    while i < len(newascii_string):
+        pack = newascii_string[i : i + 3]
+        dec_message += chr(int(pack) - 100)
+        i = i + 3
+    return dec_message
+
+
+# def text2int(x):
+#     n = len(x)
+#     s = 0
+#     while n > 0:
+#         s += (ord(x[n - 1]) - 64) * 26 ** (n - 1)
+#         n -= 1
+#     return s
+
+
+# def int2text(s):
+#     x = ""
+#     while s > 0:
+#         s, r = divmod(s, 26)
+#         x += chr(r + 64)
+#     return x
 
 
 def encrypt_int(x, p, alpha, beta):
@@ -64,17 +83,20 @@ def decrypt(y1, y2, a, p):
     return int2text(d)
 
 
+# private key: a
+# public key: (p, alpha, beta)
 def main():
-    p = prime.get_prime(64)
-    print(len(str(p)), "bits")
+    p = prime.get_prime(1024)
+    print(p.bit_length(), "bits")
     a = random.randint(p // 2, p)
-    alpha = find_primitive(p)
+    # alpha = find_primitive(p)
+    alpha = 2
     if alpha == -1:
         print("No primitive found!")
         return
     beta = pow(alpha, a, p)
 
-    plaintext = "HELLOWORLD"
+    plaintext = "Hello World"
     print("plaintext:", plaintext)
     (y1, y2) = encrypt(plaintext, p, alpha, beta)
     decryptedText = decrypt(y1, y2, a, p)
