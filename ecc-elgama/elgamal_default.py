@@ -86,11 +86,11 @@ def decrypt(y1, y2, a, p):
 # private key: a
 # public key: (p, alpha, beta)
 def main():
-    p = prime.get_prime(1024)
+    p = prime.get_prime(256)
     print(p.bit_length(), "bits")
     a = random.randint(p // 2, p)
-    # alpha = find_primitive(p)
-    alpha = 2
+    alpha = find_primitive(p)
+    # alpha = 2
     if alpha == -1:
         print("No primitive found!")
         return

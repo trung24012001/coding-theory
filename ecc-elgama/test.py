@@ -1,5 +1,6 @@
 from utils import modinv, decode_ascii, encode_ascii
 from primitive import find_primitive
+import prime
 
 
 def inverse():
@@ -41,4 +42,6 @@ def curve():
 # inverse()
 # encode()
 # primit()
-curve()
+# curve()
+
+print(prime.get_prime(30))

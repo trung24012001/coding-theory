@@ -2,7 +2,7 @@ import rsa_algorithm as rsa
 import datetime
 
 print("Start  :", datetime.datetime.now())
-pubkey, privkey = rsa.newkeys(2048)
+pubkey, privkey = rsa.newkeys(4096)
 print("Genkey :", datetime.datetime.now())
 
 plaintext = "Hello World".encode("utf8")

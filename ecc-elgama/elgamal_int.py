@@ -35,15 +35,30 @@ def decrypt_int(y1, y2, a, p):
 
 
 def main():
-    p = 139
-    a = 29
-    alpha = find_primitive(p)
+    p = 489133282872437279
+    a = 1234123
+    # alpha = find_primitive(p)
+    alpha = 13
+    print("primitive:", alpha)
     if alpha == -1:
         print("No primitive found!")
         return
+
+    # Diff-Helman
+    beta = pow(alpha, a, p)
+    print("my beta:", beta)
+    # b = 54954500367826819
+    betab = 209036596540015354
+    common = pow(betab, a, p)
+    print("common key:", common)
+
+    # elgama
+    a = common
     beta = pow(alpha, a, p)
 
-    x = 50
+    print("new beta:", beta)
+
+    x = 23025112
     print("message:", x)
     (y1, y2) = encrypt_int(x, p, alpha, beta)
     print("y:", y1, y2)
