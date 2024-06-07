@@ -20,8 +20,7 @@
 
 
 import random
-import prime
-from primitive import find_primitive
+import primitive
 
 
 def text2int(msg):
@@ -41,23 +40,6 @@ def int2text(ascii_int):
         dec_message += chr(int(pack) - 100)
         i = i + 3
     return dec_message
-
-
-# def text2int(x):
-#     n = len(x)
-#     s = 0
-#     while n > 0:
-#         s += (ord(x[n - 1]) - 64) * 26 ** (n - 1)
-#         n -= 1
-#     return s
-
-
-# def int2text(s):
-#     x = ""
-#     while s > 0:
-#         s, r = divmod(s, 26)
-#         x += chr(r + 64)
-#     return x
 
 
 def encrypt_int(x, p, alpha, beta):
@@ -86,11 +68,10 @@ def decrypt(y1, y2, a, p):
 # private key: a
 # public key: (p, alpha, beta)
 def main():
-    p = prime.get_prime(256)
+    (p, ord, alpha) = primitive.get_prime_specific_schnorr(1024)
     print(p.bit_length(), "bits")
     a = random.randint(p // 2, p)
-    alpha = find_primitive(p)
-    # alpha = 2
+
     if alpha == -1:
         print("No primitive found!")
         return

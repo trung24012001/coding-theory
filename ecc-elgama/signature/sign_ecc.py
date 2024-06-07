@@ -13,12 +13,6 @@ def modinv(a, n):
     return x2 % n
 
 
-p = 17  # prime
-a, b = 2, 2  # curve
-G = (5, 1)  # generate point
-n = 19  # order of G
-
-
 def addition(P, Q):
     if P[0] == Q[0] and P[1] == Q[1]:
         s = (3 * P[0] ** 2 + a) * modinv(2 * P[1], p) % p
@@ -38,29 +32,33 @@ def multiply(Q, k):
     return P
 
 
-d = 9  # private key
-hx = 26
+if __name__ == "__main__":
+    p = 17  # prime
+    a, b = 2, 2  # curve
+    G = (5, 1)  # generator point
+    n = 19  # order of G
+    d = 7  # private key
+    Q = multiply(G, d)  # Q = dG
 
-# sign
-Q = multiply(G, d)  # Q = dG
-r = Q[0] % n
-if r == 0:
-    raise Exception("r = 0, select another d")
-k = 13  # select k
-k_1 = modinv(k, n)
-s = (hx + d * r) * k_1 % n
-if s == 0:
-    raise Exception("s = 0, select another k")
+    hx = 26
 
-# sign (r, s)
+    # sign (r, s)
+    k = 10  # random k
+    k_1 = modinv(k, n)
 
-# verify
-w = modinv(s, n)
-u1 = hx * w % n
-u2 = r * w % n
+    kg = multiply(G, k)  # kg
+    r = kg[0] % n
+    s = (hx + d * r) * k_1 % n
 
-V = addition(multiply(G, u1), multiply(Q, u2))
+    if r == 0 or s == 0:
+        raise Exception("r or s = 0, select another k")
 
-print(V, Q)
+    # verify
+    w = modinv(s, n)
+    u1 = hx * w % n
+    u2 = r * w % n
 
-assert V[0] == r, "No match"  # verify v == r
+    V = addition(multiply(G, u1), multiply(Q, u2))
+    v = V[0] % n
+
+    assert v == r, "No match"  # verify v == r

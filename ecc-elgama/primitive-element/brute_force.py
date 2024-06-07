@@ -91,23 +91,3 @@ def find_all_primitive(p, n):
             prim.add(beta)
 
     return prim
-
-
-def get_prime_specific_schnorr(nbits):
-    """
-    return (prime, order, generator)
-    """
-    g = 2
-    while True:
-        q = prime.get_prime(nbits)
-        p = 2 * q + 1
-
-        if prime.is_prime(p) == False:
-            continue
-
-        # Jacobi symbol
-        res = p % 8
-        if res == 1 or res == 7:
-            return (p, q, g)  # generates a subgroup of order q
-        if res == 3 or res == 5:
-            return (p, p - 1, g)  # primitive
